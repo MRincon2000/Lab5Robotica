@@ -20,22 +20,24 @@ def cinemInversa(x,y,z):
     xaux=np.sqrt(x**2+y**2)-0.110
     zaux=-(0.095-z)
     costheta3=(xaux**2+zaux**2-l1**2-l2**2)/(2*l1*l2)
+    print(costheta3)
     sentheta3=np.sqrt(1-costheta3**2)
     theta3=np.arctan2(sentheta3, costheta3)
-    theta2=np.arctan2(zaux,xaux)-np.arctan2(l2*np,l2*sentheta3, l1+l2*costheta3)
+    theta2=(np.arctan2(zaux,xaux)-np.arctan2(l2*sentheta3, l1+l2*costheta3))
     theta1=np.arctan2(y,x)
-    theta4=(theta2-theta3)
-    angulos=[theta1, theta2, theta3, theta4, 0]
+    theta4=(-theta2-theta3)
+    angulos=[theta1, theta2, theta3, theta4, -1]
     return angulos
 
 def enviarPosicion(puntos):
     pub = rospy.Publisher('/joint_trajectory', JointTrajectory, queue_size=0)
     rospy.init_node('joint_publisher', anonymous=False)
 
-    for i in len(puntos):
-        x=puntos(i)(0)
-        y=puntos(i)(1)
-        z=puntos(i)(2)
+    for i in range(len(puntos)):
+        puntoActual=puntos[i]
+        x=puntoActual[0]
+        y=puntoActual[1]
+        z=puntoActual[2]
 
         state = JointTrajectory()
         state.header.stamp = rospy.Time.now()
@@ -45,7 +47,7 @@ def enviarPosicion(puntos):
         point.time_from_start = rospy.Duration(0.5)
         state.points.append(point)
         pub.publish(state)
-        rospy.sleep(1)
+        rospy.sleep(2)
 
 
 
@@ -66,7 +68,7 @@ def joint_publisher():
         print("7. Puntos equidistantes")
         print("8. Figura")
 
-        tarea=input()
+        tarea=int(input())
 
         if tarea==1:
             posicionActual=[0, 0, 0, 0, 0]
@@ -74,17 +76,8 @@ def joint_publisher():
         elif tarea==2:
             posicionActual=[0, 0, 0, 0, 0]
         elif tarea==3:
-            puntos=[[48,-211,0],[48.-211,-3],[23,-195.5,-3],[51,-185.5,-3],[55.5,-201.5,-3],[34,-226,5,-3],[59.5,-217,6,-3],[90,-247,-3],[90,-247,0]]
-        elif tarea==4:
-
-        elif tarea==5:
-
-        elif tarea==6:
-
-        elif tarea==7:
-
-        elif tarea==8:
-
+            puntos=[[0.048,-0.2645,0.0],[0.048,-0.2645,-0.03],[0.023,-0.1955,-0.03],[0.051,-0.1855,-0.03],[0.064,-0.187,-0.03],[0.071,-0.2065,-0.03],[0.0595,-0.2175,-0.03],[0.0345,-0.2265,-0.03],[0.059, -0.2175,-0.03],[0.090,-0.247,-0.03],[0.090,-0.247,0.0]]
+            enviarPosicion(puntos)
         else : break
 
 
