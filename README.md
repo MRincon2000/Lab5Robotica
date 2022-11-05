@@ -313,4 +313,23 @@ Y el resultado obtenido:
 
 <h2>Calculo de error </h2>
 
+Para calcular el error de escritura se tomarán como base los dibujos del triángulo y el círculo, mediante la ayuda de programa Adobe Photoshop, se calculan las áreas de cada una de estas dos figuras conociendo su área deseada obtenida analíticamente y contrastándola con el área obtenida en la realidad.
 
+Para esto, Photoshop incorpora la herramienta Análisis mediante la cual se pueden obtener medidas reales de una imagen. Se procede a determinar la escala de la imagen con su tamaño real. Para ello se toma el diámetro del circulo interior y sabiendo que el del dibujado en AutoCAD es de 357 mm entonces se obtiene una relación entre pixeles y mm, la cual en este caso es: 1924 pixeles=357 mm.
+
+![image](https://user-images.githubusercontent.com/49238418/200101071-40b3be5e-25c3-4e65-b8cd-793246b97982.png)
+
+Una vez hecho esto se selecciona el círculo mediante la herramienta de selección rápida y se da clic en la opción de grabar medida. Se repite el procedimiento para el caso del triángulo. Las áreas obtenidas son 5004.3801 mm2 para el círculo y 2877.6916 mm2 para el triángulo.
+
+![image](https://user-images.githubusercontent.com/49238418/200101278-e61e929b-84c1-4922-afad-d7a2d87cd542.png)
+
+Analíticamente, se sabe que el círculo deseado debía tener un área de 5026.5 mm2 debido a que su radio es de 40 mm. Calculando el error porcentual para el área en este caso se obtiene (5004.3801-5026.5)/5026.5*100%=-0.44%. Lo cual es un error bastante reducido. 
+
+Por otro lado, la situación para el triángulo es muy diferente. Como se tiene un lado de 90mm, el triángulo analíticamente debe poseer un área de 3507.402 mm mientras que en el dibujo tiene un área de 2877.6916. En este caso repitiendo el procedimiento anterior se obtiene (2877.6916-3507.402)/3507.402*100%=-17.95%. En perímetro se esperará una longitud de 270 mm mientras que en el dibujo es de 277.046. Repitiendo el procedimiento (277.046-270)/270*100%=2.609%
+
+<h2>Conclusiones </h2>
+
+- Se puede intuir que la gran diferencia en los errores calculados se debe a que en el caso del círculo, se dibujaron 16 puntos (lados) diferentes mientras que para el triángulo unicamente se transmitieron los extremos de cada uno de los lados, de esta manera la trayectoria evidentemente fue considerablemente menos exacta provocando un error mucho mas elevado. 
+- Para obtener errores mas bajos lo recomendable es interpolar las trayectorias con muchos mas puntos de los que se tomaron. A su vez, debido a que el rbot utilizado no permite control de velocidad, este es posible de "simular" variando la distribucion y distancia entre cada uno de los puntos.
+- La cinemática inversa permite lograr trayectorias complejas en el robot Pincher mediante ecuaciones sencillas siguiendo el método geométrico.
+- El uso de herramientas gráficas como AutoCAD y Photoshop resulta de gran ayuda para el diseño y validación de las trayectorias.
